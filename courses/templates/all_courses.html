@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<div class="container mt-[30px] md:mt-[50px] mb-[75px] md:mb-[150px]">
+  <h1 class="text-center text-4xl md:text-7xl mb-[30px] md:mb-[50px]">All Courses</h1>
+
+  <div class="row">
+    {% for course in courses %}
+    <div class="custom_design col-lg-4 col-md-6 col-sm-12 mb-4">
+      <div class="border shadow-lg p-10">
+        <div class="">
+          <h2 class="mb-[20px]">{{ course.title }}</h2>
+          <p class="mb-[10px]">{{ course.description }}</p>
+          <p class="mb-[10px]"><strong>Department:</strong> {{ course.department }}</p>
+          <p class="mb-[10px]"><strong>Teacher:</strong> {{ course.teacher.username }}</p>
+          <a href="{% url 'course-update' course.pk %}" class="btn btn-primary btn-sm">Edit</a>
+          <a href="{% url 'course-delete' course.id %}" class="btn btn-danger btn-sm">Delete</a>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-message">
+      No courses are created yet!
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

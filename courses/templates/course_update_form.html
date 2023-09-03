@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+  .center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+  }
+  .heading {
+    font-size: 30px;
+    margin-bottom: 20px;
+  }
+  label {
+    font-weight: 400;
+  }
+  .custom-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 100px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"] {
+    height: 40px;
+    width: 100%;
+    padding: 10px;
+  }
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+    height: 100px;
+  }
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+  }
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  .text-center {
+    text-align: center;
+  }
+</style>
+
+<section>
+  <h1 class="text-center heading">Edit Course</h1>
+  <div class="center-container">
+    <div class="col-md-6">
+      <form method="POST">
+        {% csrf_token %}
+
+        <!-- Title Field -->
+        <div class="form-group">
+          {{ form.title.label_tag }}
+          {{ form.title }}
+          {% if form.title.errors %}
+            <ul class="errorlist">
+              {% for error in form.title.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <!-- Description Field -->
+        <div class="form-group">
+          {{ form.description.label_tag }}
+          {{ form.description }}
+          {% if form.description.errors %}
+            <ul class="errorlist">
+              {% for error in form.description.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <!-- Department Field -->
+        <div class="form-group">
+          {{ form.department.label_tag }}
+          {{ form.department }}
+          {% if form.department.errors %}
+            <ul class="errorlist">
+              {% for error in form.department.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          {% endif %}
+        </div>
+
+        <!-- Teacher (User) Field (hidden) -->
+        <input type="hidden" name="{{ form.teacher.name }}" value="{{ user.id }}">
+
+        <!-- Submit Button -->
+        <div class="">
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <a href="{% url 'courses' %}" class="btn btn-secondary">Cancel</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

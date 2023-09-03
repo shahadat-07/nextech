@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<style>
+  {% comment %} .custom_design {
+    border: 1px solid blue;
+    padding: 30px;
+  }
+
+  /* Centered message */
+  .empty-message {
+    text-align: center;
+    margin-top: 30px; /* Adjust the margin as needed */
+    font-size: 18px;
+    color: gray;
+  }
+
+  /* Form styles */
+  .search-form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+
+  .search-form input[type="text"],
+  .search-form select {
+    width: 200px;
+    margin-right: 10px;
+    padding: 5px;
+  }
+
+  .search-form button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  .search-form button:hover {
+    background-color: #0056b3;
+  } {% endcomment %}
+
+</style>
+
+<div class="container mb-[75px] md:mb-[150px]">
+  <h1 class="text-center text-4xl md:text-7xl mt-10 mb-10 md:mb-20">Welcome to the Course Page</h1>
+
+  <form class="flex flex-col md:flex-row items-center justify-center mx-auto gap-8 mb-[50px]" method="GET" action="{% url 'all_courses_student_panel' %}">
+    <input type="text" name="q" placeholder="Search by title" class="border py-4 px-8">
+    <select name="department" class="px-8 py-4 border rounded-xl bg-gray-700 text-white">
+        <option value="">All Departments</option>
+        {% for department in departments %}
+            <option value="{{ department }}">{{ department }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit" class="px-8 py-4 border rounded-xl bg-gray-700 text-white">Search & Filter</button>
+  </form>
+
+  <div class="row">
+    {% for course in courses %}
+    <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+      <div class="border shadow-lg p-10">
+          <h5 class="text-3xl mb-[10px]">Subject: {{ course.title }}</h5>
+          <p class="mb-[10px]"><span>Desctiption:</span> {{ course.description }}</p>
+          <p class="mb-[10px]"><span>Department:</span> {{ course.department }}</p>
+          <p class="mb-[30px]"><span>Teacher:</span> {{ course.teacher.username }}</p>
+          <a href="#" class="px-8 py-4 border rounded-xl bg-green-600 text-white">Enroll</a>
+          {% comment %} <a href="{% url 'course-delete' course.id %}" class="px-8 py-4 border rounded-xl bg-red-600 text-white">Delete</a> {% endcomment %}
+      </div>
+    </div>
+    {% empty %}
+    <div class="empty-message">
+      No courses are available.
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

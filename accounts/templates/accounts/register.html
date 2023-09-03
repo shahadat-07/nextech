@@ -1,0 +1,153 @@
+{% extends 'base.html' %} {% block body%}
+<style>
+  .center-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    {% comment %} min-height: 100vh; {% endcomment %}
+  }
+  .heading {
+    font-size: 50px;
+  }
+  /* Custom CSS to decrease label font weight */
+  label {
+    font-weight: 400; /* You can adjust the font weight value as needed */
+  }
+  .custom-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+
+  .errorlist {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .errorlist li {
+    font-weight: bold; /* Make error messages bold */
+    color: red; /* Set the color to red */
+  }
+</style>
+
+<section>
+  <h1 class="text-center heading">Registration</h1>
+
+  <div class="center-container">
+    <div class="col-md-6">
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            <br>
+            {{ form.username }}
+            {% if form.username.errors %}
+                <ul class="errorlist">
+                    {% for error in form.username.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+          {{ form.first_name.label_tag }}
+          <br>
+          {{ form.first_name }}
+          {% if form.first_name.errors %}
+              <ul class="errorlist">
+                  {% for error in form.first_name.errors %}
+                      <li>{{ error }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+      </div>
+      <div class="form-group">
+          {{ form.last_name.label_tag }}
+          <br>
+          {{ form.last_name }}
+          {% if form.last_name.errors %}
+              <ul class="errorlist">
+                  {% for error in form.last_name.errors %}
+                      <li>{{ error }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+      </div>
+
+        <div class="form-group">
+            {{ form.password1.label_tag }}
+            <br>
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password1.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            <br>
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <ul class="errorlist">
+                    {% for error in form.password2.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    
+        <div class="form-group">
+          {{ form.user_type.label_tag }}
+          <br>
+          <select class="custom-input" name="{{ form.user_type.name }}">
+              {% for value, label in form.user_type.field.choices %}
+                  <option value="{{ value }}">{{ label }}</option>
+              {% endfor %}
+          </select>
+          {% if form.user_type.errors %}
+              <ul class="errorlist">
+                  {% for error in form.user_type.errors %}
+                      <li>{{ error }}</li>
+                  {% endfor %}
+              </ul>
+          {% endif %}
+      </div>
+      
+      
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    </div>
+  </div>
+  <p class="text-center">
+    Have an account? <a href="{% url 'login' %}">Log In</a>
+  </p>
+  <br /><br />
+</section>
+
+
+{% endblock%}
